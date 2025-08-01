@@ -1,6 +1,7 @@
 :root {
   --main-color-background: #abe1ab;
   --main-color-primary: #05df72;
+  --main-color-input-focus: #dcfce7;
   --main-color-white: #ffffff;
   --main-color-gray: #eee;
   --main-color-black: #000;
@@ -20,6 +21,7 @@ body {
   border-radius: var(--main-border);
 }
 
+/********nav-bar*******************/
 .nav-bar {
   max-width: 100%;
   margin-bottom: 5px;
@@ -70,9 +72,9 @@ body {
 
 /********Forms*******************/
 input:focus {
-  background-color: var(--main-color-background);
+  background-color: var(--main-color-input-focus);
   outline: unset;
-  color: var(--main-color-white);
+  color: var(--main-color-primary);
 }
 
 input::placeholder {
@@ -80,8 +82,28 @@ input::placeholder {
   opacity: 0.5;
   color: var(--main-color-primary);
 }
-/********Login*******************/
 
+.error {
+  border: solid 1px coral !important;
+}
+.success {
+  border: solid 1px var(--main-color-background) !important;
+}
+
+button {
+  background-color: var(--main-color-primary);
+  border: 0px;
+  padding: 10px;
+  border-radius: var(--main-border);
+  color: var(--main-color-white);
+}
+
+button:hover {
+  background-color: var(--main-color-gray);
+  color: var(--main-color-primary);
+  cursor: pointer;
+}
+/********Login*******************/
 .login {
   max-width: 800px;
   margin: 0 auto;
@@ -110,4 +132,14 @@ input::placeholder {
   height: 40px;
   border-radius: var(--main-border);
   border: 1px solid #eee;
+}
+
+@media screen and (max-width: 520px) {
+  .login form {
+    margin-left: 0px;
+    width: 100%;
+  }
+  .login form input {
+    width: auto;
+  }
 }
