@@ -1,6 +1,7 @@
 :root {
   --main-color-background: #abe1ab;
-  --main-color-withe: #ffffff;
+  --main-color-primary: #05df72;
+  --main-color-white: #ffffff;
   --main-color-gray: #eee;
   --main-color-black: #000;
   --main-border: 5px;
@@ -9,13 +10,36 @@
 body {
   background-color: var(--main-color-background);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
 }
 
 .container-primary {
   margin: 0 auto;
   max-width: 1200px;
-  background-color: var(--main-color-withe);
+  background-color: var(--main-color-white);
   border-radius: var(--main-border);
+}
+
+.nav-bar {
+  max-width: 100%;
+  margin-bottom: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nav-bar > div {
+  flex: 1 1 300px;
+  align-self: center;
+}
+
+.nav-bar {
+  max-width: 100%;
+  border-bottom: solid 1px var(--main-color-gray);
+}
+
+.nav-bar h1 {
+  text-align: center;
+  font-size: 18px;
 }
 
 .nav-bar ul {
@@ -23,15 +47,6 @@ body {
   overflow: hidden;
   margin: 0px;
   padding: 0px;
-  border-bottom: solid 1px var(--main-color-gray);
-}
-
-.nav-bar {
-  max-width: 100%;
-}
-
-.nav-bar .title > li {
-  width: 500px;
 }
 
 .nav-bar li {
@@ -42,12 +57,7 @@ body {
   display: block;
   color: var(--main-color-black);
   padding: 10px 8px;
-
   text-decoration: none;
-}
-
-.nav-bar .menu {
-  float: right;
 }
 
 .nav-bar .title h1 {
@@ -58,7 +68,19 @@ body {
   background-color: var(--main-color-gray);
 }
 
-/***************************/
+/********Forms*******************/
+input:focus {
+  background-color: var(--main-color-background);
+  outline: unset;
+  color: var(--main-color-white);
+}
+
+input::placeholder {
+  font-weight: bold;
+  opacity: 0.5;
+  color: var(--main-color-primary);
+}
+/********Login*******************/
 
 .login {
   max-width: 800px;
