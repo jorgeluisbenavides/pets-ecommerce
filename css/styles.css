@@ -16,6 +16,7 @@ body {
 
 .container-primary {
   margin: 0 auto;
+  margin-top: 10px;
   max-width: 1200px;
   background-color: var(--main-color-white);
   border-radius: var(--main-border);
@@ -60,7 +61,7 @@ body {
 .nav-bar li a {
   display: block;
   color: var(--main-color-black);
-  padding: 10px 8px;
+  padding: 0px 8px;
   text-decoration: none;
   display: table-cell;
   align-content: center;
@@ -74,6 +75,15 @@ body {
   background-color: var(--main-color-gray);
 }
 
+.icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.icon-box {
+  cursor: pointer;
+}
 /********Forms*******************/
 input:focus {
   background-color: var(--main-color-input-focus);

@@ -1,5 +1,6 @@
 const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const expresionPassword = /^[{a-z}+{A-Z}]+$/;
+const expresionPassword = /^[{a-z}]{5,10}$/;
+const keyToken = "token";
 
 const formLogin = document.getElementById("formLogin");
 if (formLogin !== null) {
@@ -14,29 +15,46 @@ if (isExistMenu) {
 }
 
 function showUserName() {
-  const sesion = localStorage.getItem("sesion");
-  if (sesion) {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
+  const sesion = localStorage.getItem(keyToken);
+  const li = document.createElement("li");
+  const a = document.createElement("a");
 
+  if (sesion) {
     const icono =
       "<span class='material-symbols-outlined' style='font-size: 15px;'>" +
-      "shopping_bag_speed" +
+      "logout" +
       "</span>";
 
-    a.innerHTML = icono + " Salir";
+    a.innerHTML = "<div class='icon-box'><span>Salir</span>" + icono + "</div>";
     a.addEventListener("click", function () {
       closeSession();
     });
     li.appendChild(a);
+  } else if (!sesion) {
+    const icono =
+      "<span class='material-symbols-outlined' style='font-size: 15px;'>" +
+      "login" +
+      "</span>";
 
-    isExistMenu.appendChild(li);
+    a.innerHTML =
+      "<div class='icon-box'><span>Entrar</span>" + icono + "</div>";
+    a.addEventListener("click", function () {
+      goLogin();
+    });
+    li.appendChild(a);
   }
+
+  console.log(li);
+  isExistMenu.appendChild(li);
 }
 
 function closeSession() {
-  localStorage.removeItem("sesion");
+  localStorage.removeItem(keyToken);
   window.location.reload();
+}
+
+function goLogin() {
+  window.location.href = "login.html";
 }
 
 function signIn(event) {
@@ -56,8 +74,6 @@ function signIn(event) {
     email.classList.add("error");
   }
 
-  console.log("valores:", email.value, password.value);
-  console.log(!expresionEmail.test(email.value.trim()));
   if (!expresionEmail.test(email.value.trim())) {
     email.classList.add("error");
     message.textContent = "Correo no válido";
@@ -80,10 +96,32 @@ function signIn(event) {
   message.classList.add("message-success");
   message.textContent = "Iniciando...";
 
-  const sessionActive = "1";
+  const payload = JSON.stringify({
+    email: email.value,
+    password: password.value,
+  });
 
-  localStorage.setItem("sesion", sessionActive);
+  fetch("https://reqres.in/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": "reqres-free-v1",
+    },
+    body: payload,
+  })
+    .then(async (response) => {
+      const data = await response.json();
 
-  console.log("fin del script");
-  window.location.href = "index.html";
+      if (response.ok) {
+        localStorage.setItem(keyToken, data.token);
+        window.location.href = "index.html";
+      } else {
+        message.classList.remove("message-success");
+        message.classList.add("message-error");
+        message.textContent = "La información no es válida!";
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }

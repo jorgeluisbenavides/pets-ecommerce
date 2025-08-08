@@ -1,0 +1,20 @@
+  [
+    {
+      "name":"Juguete para perros",
+      "description":"",
+      "image":"product1.png",
+      "price":80
+    }, 
+    {
+      "name":"Alimento para gatos",
+      "description":"",
+      "image":"product2.png",
+      "price":20
+    },
+    {
+      "name":"Jaula para áves",
+      "description":"",
+      "image":"product3.png",
+      "price":150
+    }
+  ]
