@@ -44,7 +44,6 @@ function showUserName() {
     li.appendChild(a);
   }
 
-  console.log(li);
   isExistMenu.appendChild(li);
 }
 
@@ -102,7 +101,7 @@ function signIn(event) {
   });
 
   fetch("https://reqres.in/api/login", {
-    method: "POST",
+    method: "POST", // put //patch necesitan un body
     headers: {
       "Content-Type": "application/json",
       "x-api-key": "reqres-free-v1",
@@ -123,5 +122,53 @@ function signIn(event) {
     })
     .catch(function (error) {
       console.log(error);
+    });
+}
+
+/***********Corousel**********/
+const track = document.getElementById("carousel-track");
+if (track) {
+  const slides = document.querySelectorAll(".carousel-slide");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  let currentIndex = 0;
+
+  function updateSleidePosition() {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  prevBtn.addEventListener("click", function () {
+    currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
+    updateSleidePosition();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateSleidePosition();
+  });
+
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateSleidePosition();
+  }, 5000); //milisegundos
+}
+
+/*** products*/
+
+const productsHome = document.getElementById("products-home");
+if (productsHome) {
+  fetch("./js/products.json")
+    .then((response) => response.json())
+    .then((response) => {
+      response.forEach((producto) => {
+        console.log(producto);
+        const cardProduct = `<div class="product-card">
+        <img src="./img/products/${producto.image}" alt="Juguete para perros"></img>
+        <div class="product-name">${producto.name}</div>
+        <div class="product-price">$${producto.price}</div>
+      </div>`;
+        console.log(cardProduct);
+        //productsHome.appendChild(cardProduct);
+      });
     });
 }

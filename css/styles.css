@@ -111,7 +111,7 @@ input::placeholder {
   color: var(--main-color-background);
 }
 
-button {
+form button {
   background-color: var(--main-color-primary);
   border: 0px;
   padding: 10px;
@@ -119,7 +119,7 @@ button {
   color: var(--main-color-white);
 }
 
-button:hover {
+form button:hover {
   background-color: var(--main-color-gray);
   color: var(--main-color-primary);
   cursor: pointer;
@@ -171,4 +171,90 @@ button:hover {
   .login form input {
     width: 100%;
   }
+}
+
+/********Carousel*******************/
+.carousel-container {
+  width: 100%;
+  max-width: 1200px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.15);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  transition: opacity 0.5s ease;
+}
+
+.carousel-slide img {
+  width: 100%;
+  display: block;
+}
+
+.carousel-buttons {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* transform: translateY(-50%);*/
+}
+
+.carousel-buttons button {
+  background-color: var(--main-color-primary);
+  border: 0px;
+  padding: 10px;
+  border-radius: var(--main-border);
+  color: var(--main-color-white);
+}
+
+.carousel-buttons button:hover {
+  background-color: var(--main-color-gray);
+  color: var(--main-color-primary);
+  cursor: pointer;
+}
+
+.carousel-buttons button {
+  border-radius: 50%;
+  padding: 10px;
+  margin: 10px;
+}
+
+.carousel-buttons button span {
+  font-size: 40px;
+}
+
+.products-container {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-card {
+  width: 170px;
+  height: auto;
+  position: relative;
+}
+.product-name {
+  text-align: center;
+}
+.product-price {
+  position: absolute;
+  background: var(--main-color-gray);
+  border-radius: var(--main-border);
+  bottom: 30px;
+  text-align: center;
+  margin: 0 auto;
+  left: 35%;
 }
