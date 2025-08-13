@@ -161,14 +161,57 @@ if (productsHome) {
     .then((response) => response.json())
     .then((response) => {
       response.forEach((producto) => {
-        console.log(producto);
+        const price = new Intl.NumberFormat("es-MX", {
+          style: "currency",
+          currency: "MXN",
+        }).format(producto.price);
+
         const cardProduct = `<div class="product-card">
-        <img src="./img/products/${producto.image}" alt="Juguete para perros"></img>
+        <img src="./img/products/${producto.image}" alt="${producto.image}"></img>
         <div class="product-name">${producto.name}</div>
-        <div class="product-price">$${producto.price}</div>
+        <div class="product-price">${price}</div>
       </div>`;
-        console.log(cardProduct);
-        //productsHome.appendChild(cardProduct);
+
+        const div = document.createElement("div");
+        div.innerHTML = cardProduct;
+        productsHome.appendChild(div);
       });
     });
+}
+
+/** categories **/
+const categoriesHome = document.getElementById("categories-home");
+if (categoriesHome) {
+  fetch("./js/categories.json")
+    .then((response) => response.json())
+    .then((response) => {
+      response.forEach((category) => {
+        const cardCategory = `<div class="product-card">
+        <img src="./img/categories/${category.image}" alt="${category.name}"></img>
+        <div class="product-name">${category.name}</div>
+      </div>`;
+
+        const div = document.createElement("div");
+        div.innerHTML = cardCategory;
+        categoriesHome.appendChild(div);
+      });
+    });
+}
+
+/*** products search ****/
+
+const searchProducts = document.getElementById("search-products");
+
+if (searchProducts) {
+  searchProducts.addEventListener("keyup", function () {
+    fetch("./js/products.json")
+      .then((response) => response.json())
+      .then((response) => {
+        const respuesta = response.filter((product) =>
+          product.name.toLowerCase().includes(searchProducts.value)
+        );
+
+        console.log(respuesta);
+      });
+  });
 }

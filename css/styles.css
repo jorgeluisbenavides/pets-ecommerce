@@ -2,6 +2,7 @@
   --main-color-background: #abe1ab;
   --main-color-primary: #05df72;
   --main-color-input-focus: #dcfce7;
+  --main-color-price: #4f966b;
   --main-color-white: #ffffff;
   --main-color-gray: #eee;
   --main-color-black: #000;
@@ -43,6 +44,7 @@ body {
 .nav-bar h1 {
   text-align: center;
   font-size: 18px;
+  margin-bottom: 0px;
 }
 
 .nav-bar ul {
@@ -231,6 +233,12 @@ form button:hover {
   font-size: 40px;
 }
 
+#products {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 0rem;
+}
+
 .products-container {
   margin-top: 1rem;
   width: 100%;
@@ -244,17 +252,80 @@ form button:hover {
 .product-card {
   width: 170px;
   height: auto;
-  position: relative;
 }
 .product-name {
-  text-align: center;
+  text-align: left;
+  font-size: 14px;
 }
 .product-price {
-  position: absolute;
-  background: var(--main-color-gray);
-  border-radius: var(--main-border);
-  bottom: 30px;
-  text-align: center;
+  color: var(--main-color-price);
+  text-align: left;
   margin: 0 auto;
-  left: 35%;
+}
+
+#categories {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 0rem;
+}
+
+.categories-container {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+/****** products list ******/
+.products-contanter {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  gap: 10px;
+  min-height: 400px;
+}
+
+.filters {
+  padding: 10px;
+  border: solid red 1px;
+}
+
+.filters ul {
+  list-style-type: none;
+}
+
+.products-result {
+  padding: 10px;
+}
+
+@media screen and (max-width: 640px) {
+  .products-contanter {
+    grid-template-columns: 100%;
+    min-height: auto;
+  }
+}
+
+.input-seach {
+  position: relative;
+  margin: 5px 0px;
+}
+
+.input-seach span {
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  color: var(--main-color-price);
+}
+
+.input-seach input {
+  min-height: 30px;
+  border: 0px;
+  border-radius: var(--main-border);
+  padding-left: 25px;
+}
+
+.input-seach input:focus {
+  outline: unset;
 }

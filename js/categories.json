@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Perros",
+    "image": "category1.png",
+    "category": "dogs"
+  },
+  {
+    "name": "Gatos",
+    "image": "category2.png",
+    "category": "cats"
+  },
+  {
+    "name": "Áves",
+    "image": "category3.png",
+    "category": "birt"
+  },
+  {
+    "name": "Animales pequeños",
+    "image": "category4.png",
+    "category": "small"
+  }
+]

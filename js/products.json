@@ -3,18 +3,28 @@
       "name":"Juguete para perros",
       "description":"",
       "image":"product1.png",
+      "category": "dogs",
       "price":80
     }, 
     {
       "name":"Alimento para gatos",
       "description":"",
       "image":"product2.png",
+      "category": "cats",
       "price":20
     },
     {
       "name":"Jaula para áves",
       "description":"",
       "image":"product3.png",
+      "category": "birt",
       "price":150
+    }, 
+    {
+      "name":"Cama para conejo",
+      "description":"",
+      "image":"product4.png",
+      "category": "rabbit",
+      "price":180
     }
   ]
