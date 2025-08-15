@@ -2,6 +2,7 @@
   --main-color-background: #abe1ab;
   --main-color-primary: #05df72;
   --main-color-input-focus: #dcfce7;
+  --main-color-input-search: #e8f2ed;
   --main-color-price: #4f966b;
   --main-color-white: #ffffff;
   --main-color-gray: #eee;
@@ -112,7 +113,6 @@ input::placeholder {
 .message-success {
   color: var(--main-color-background);
 }
-
 form button {
   background-color: var(--main-color-primary);
   border: 0px;
@@ -315,11 +315,13 @@ form button:hover {
 .input-seach span {
   position: absolute;
   left: 0px;
-  top: 2px;
+  top: 7px;
+  z-index: 1;
   color: var(--main-color-price);
 }
 
 .input-seach input {
+  background-color: var(--main-color-input-search);
   min-height: 30px;
   border: 0px;
   border-radius: var(--main-border);
@@ -328,4 +330,10 @@ form button:hover {
 
 .input-seach input:focus {
   outline: unset;
+}
+
+.products-result .products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
 }

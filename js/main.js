@@ -160,7 +160,11 @@ if (productsHome) {
   fetch("./js/products.json")
     .then((response) => response.json())
     .then((response) => {
-      response.forEach((producto) => {
+      const productsFirter = response.filter(
+        (product) => product.isOutstanding === true
+      );
+
+      productsFirter.forEach((producto) => {
         const price = new Intl.NumberFormat("es-MX", {
           style: "currency",
           currency: "MXN",
@@ -203,15 +207,70 @@ if (categoriesHome) {
 const searchProducts = document.getElementById("search-products");
 
 if (searchProducts) {
-  searchProducts.addEventListener("keyup", function () {
-    fetch("./js/products.json")
-      .then((response) => response.json())
-      .then((response) => {
-        const respuesta = response.filter((product) =>
-          product.name.toLowerCase().includes(searchProducts.value)
-        );
+  let products = [];
+  let responseOrigin = [];
+  let categoriesChecked = [];
 
-        console.log(respuesta);
-      });
+  fetch("./js/products.json")
+    .then((response) => response.json())
+    .then((response) => {
+      products = response;
+      responseOrigin = response;
+
+      showProducts(products);
+    });
+
+  searchProducts.addEventListener("keyup", function () {
+    products = responseOrigin.filter((product) =>
+      product.name.toLowerCase().includes(searchProducts.value)
+    );
+
+    showProducts(products);
+  });
+
+  const checkDogs = document.getElementById("dogs");
+  checkDogs.addEventListener("click", function () {
+    if (checkDogs.checked) {
+      categoriesChecked.push(checkDogs.value);
+    } else {
+      const idx = categoriesChecked.indexOf(checkDogs.value);
+      categoriesChecked.splice(idx, 1);
+    }
+
+    console.log(categoriesChecked);
+  });
+
+  const checkCats = document.getElementById("cats");
+  checkCats.addEventListener("click", function () {
+    if (checkCats.checked) {
+      categoriesChecked.push(checkCats.value);
+    } else {
+      const idx = categoriesChecked.indexOf(checkCats.value);
+      categoriesChecked.splice(idx, 1);
+    }
+
+    console.log(categoriesChecked);
+  });
+}
+
+function showProducts(products) {
+  const productsResult = document.getElementById("products-result");
+  productsResult.innerHTML = "";
+
+  products.forEach((producto) => {
+    const price = new Intl.NumberFormat("es-MX", {
+      style: "currency",
+      currency: "MXN",
+    }).format(producto.price);
+
+    const cardProduct = `<div class="product-card">
+            <img src="./img/products/${producto.image}" alt="${producto.image}"></img>
+            <div class="product-name">${producto.name}</div>
+            <div class="product-price">${price}</div>
+          </div>`;
+
+    const div = document.createElement("div");
+    div.innerHTML = cardProduct;
+    productsResult.appendChild(div);
   });
 }

@@ -4,6 +4,7 @@
       "description":"",
       "image":"product1.png",
       "category": "dogs",
+      "isOutstanding":true,
       "price":80
     }, 
     {
@@ -11,6 +12,7 @@
       "description":"",
       "image":"product2.png",
       "category": "cats",
+      "isOutstanding":true,
       "price":20
     },
     {
@@ -18,6 +20,7 @@
       "description":"",
       "image":"product3.png",
       "category": "birt",
+      "isOutstanding":true,
       "price":150
     }, 
     {
@@ -25,6 +28,55 @@
       "description":"",
       "image":"product4.png",
       "category": "rabbit",
+      "isOutstanding":true,
       "price":180
+    },
+    {
+      "name":"Pecera",
+      "description":"",
+      "image":"product5.png",
+      "category": "fish",
+      "isOutstanding":true,
+      "price":250
+    },
+    {
+      "name":"Alimento para pez",
+      "description":"",
+      "image":"product6.png",
+      "category": "fish",
+      "isOutstanding":false,
+      "price":50
+    },
+    {
+      "name":"Accesorios para perro",
+      "description":"",
+      "image":"product7.png",
+      "category": "dogs",
+      "isOutstanding":false,
+      "price":180
+    },
+    {
+      "name":"Cama para gatos",
+      "description":"",
+      "image":"product8.png",
+      "category": "cats",
+      "isOutstanding":false,
+      "price":180
+    },
+    {
+      "name":"Alimento para perros",
+      "description":"",
+      "image":"product9.png",
+      "category": "dogs",
+      "isOutstanding":false,
+      "price":50
+    },
+    {
+      "name":"Alimento para pez",
+      "description":"",
+      "image":"product10.png",
+      "category": "fish",
+      "isOutstanding":false,
+      "price":50
     }
   ]

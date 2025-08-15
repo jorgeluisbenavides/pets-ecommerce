@@ -31,7 +31,8 @@
                 <span class="material-symbols-outlined">
                   shopping_bag_speed
                 </span>
-                <input id="search-products" type="text" name="search" placeholder="Buscar productos">
+                <input id="search-products" class="input-seach" type="text" name="search"
+                  placeholder="Buscar productos">
               </div>
             </li>
           </ul>
@@ -41,30 +42,40 @@
     <section>
       <div class="products-contanter">
         <div class="filters">
-          <h3>Filtros</h3>
+          <h5>Filtros</h5>
+          <p>Categorías</p>
           <ul>
             <li>
               <label>
-                <input type="checkbox" name="category" value="dogs">
+                <input id="dogs" type="checkbox" name="category" value="dogs">
                 Perros
               </label>
             </li>
             <li>
               <label>
-                <input type="checkbox" name="category" value="cats">
+                <input id="cats" type="checkbox" name="category" value="cats">
                 Gatos
               </label>
             </li>
             <li>
               <label>
-                <input type="checkbox" name="category" value="birt">
+                <input id="birt" type="checkbox" name="category" value="birt">
                 Aves
+              </label>
+            </li>
+            <li>
+              <label>
+                <input id="fish" type="checkbox" name="category" value="fish">
+                Peces
               </label>
             </li>
           </ul>
         </div>
         <div class="products-result">
-          <h3>Todos los productos</h3>
+          <section>
+            <h3>Todos los productos</h3>
+            <div id="products-result" class="products"></div>
+          </section>
 
         </div>
       </div>
