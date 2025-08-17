@@ -23,7 +23,32 @@ body {
   background-color: var(--main-color-white);
   border-radius: var(--main-border);
 }
+/********loading*******************/
+.loading {
+  max-width: 100vh;
+  max-height: 100vh;
+  border: solid 1px red;
+  top: 50%;
+  right: 50%;
+  position: absolute;
+}
+.rotate {
+  display: inline-block;
+  transform: rotate(45deg);
+}
+.rotate-infinite {
+  display: inline-block;
+  animation: spin 2s infinite;
+}
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 /********nav-bar*******************/
 .nav-bar {
   max-width: 100%;
@@ -289,7 +314,7 @@ form button:hover {
 
 .filters {
   padding: 10px;
-  border: solid red 1px;
+  border-right: var(--main-color-gray) solid 1px;
 }
 
 .filters ul {

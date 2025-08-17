@@ -44,37 +44,24 @@
         <div class="filters">
           <h5>Filtros</h5>
           <p>Categorías</p>
-          <ul>
-            <li>
+          <ul id="categories-filters">
+            <!-- <li>
               <label>
                 <input id="dogs" type="checkbox" name="category" value="dogs">
                 Perros
               </label>
-            </li>
-            <li>
-              <label>
-                <input id="cats" type="checkbox" name="category" value="cats">
-                Gatos
-              </label>
-            </li>
-            <li>
-              <label>
-                <input id="birt" type="checkbox" name="category" value="birt">
-                Aves
-              </label>
-            </li>
-            <li>
-              <label>
-                <input id="fish" type="checkbox" name="category" value="fish">
-                Peces
-              </label>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="products-result">
-          <section>
+          <section style="position: relative;">
             <h3>Todos los productos</h3>
             <div id="products-result" class="products"></div>
+            <div id="loading" class="loading">
+              <span class="rotate rotate-infinite material-symbols-outlined">
+                shopping_bag_speed
+              </span>
+            </div>
           </section>
 
         </div>

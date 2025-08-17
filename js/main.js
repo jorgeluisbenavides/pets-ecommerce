@@ -202,55 +202,133 @@ if (categoriesHome) {
     });
 }
 
+/**  categories filters **/
+
+let categoriesChecked = [];
+
+async function makeCategories() {
+  const categories = await getCategories();
+
+  categories.forEach((category) => {
+    const cardCategory = `
+      <label>
+        <input id="${category.category}" type="checkbox" name="category" value="${category.category}">
+        ${category.name}
+      </label>`;
+
+    const li = document.createElement("li");
+    li.innerHTML = cardCategory;
+    categoriesFilters.appendChild(li);
+  });
+}
+
+async function getCategories() {
+  let data = [];
+
+  await fetch("./js/categories.json")
+    .then((response) => response.json())
+    .then((response) => {
+      data = response;
+    });
+
+  return data;
+}
+
 /*** products search ****/
 
 const searchProducts = document.getElementById("search-products");
+const categoriesFilters = document.getElementById("categories-filters");
 
 if (searchProducts) {
   let products = [];
-  let responseOrigin = [];
-  let categoriesChecked = [];
 
-  fetch("./js/products.json")
-    .then((response) => response.json())
-    .then((response) => {
-      products = response;
-      responseOrigin = response;
+  makeProducts().then((resolveProducts) => {
+    if (categoriesFilters) {
+      makeCategories().then(() => {
+        const checkDogs = document.getElementById("dogs");
+
+        checkDogs.addEventListener("click", function () {
+          if (checkDogs.checked) {
+            categoriesChecked.push(checkDogs.value);
+          } else {
+            const idx = categoriesChecked.indexOf(checkDogs.value);
+            categoriesChecked.splice(idx, 1);
+          }
+          applyFilters(categoriesChecked, resolveProducts);
+        });
+
+        const checkCats = document.getElementById("cats");
+        checkCats.addEventListener("click", function () {
+          if (checkCats.checked) {
+            categoriesChecked.push(checkCats.value);
+          } else {
+            const idx = categoriesChecked.indexOf(checkCats.value);
+            categoriesChecked.splice(idx, 1);
+          }
+          applyFilters(categoriesChecked, resolveProducts);
+        });
+
+        const checkBirt = document.getElementById("birt");
+        checkBirt.addEventListener("click", function () {
+          if (checkBirt.checked) {
+            categoriesChecked.push(checkBirt.value);
+          } else {
+            const idx = categoriesChecked.indexOf(checkBirt.value);
+            categoriesChecked.splice(idx, 1);
+          }
+          applyFilters(categoriesChecked, resolveProducts);
+        });
+
+        const checkFish = document.getElementById("fish");
+        checkFish.addEventListener("click", function () {
+          if (checkFish.checked) {
+            categoriesChecked.push(checkFish.value);
+          } else {
+            const idx = categoriesChecked.indexOf(checkFish.value);
+            categoriesChecked.splice(idx, 1);
+          }
+          applyFilters(categoriesChecked, resolveProducts);
+        });
+      });
+    }
+
+    searchProducts.addEventListener("keyup", function () {
+      products = resolveProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchProducts.value)
+      );
 
       showProducts(products);
     });
-
-  searchProducts.addEventListener("keyup", function () {
-    products = responseOrigin.filter((product) =>
-      product.name.toLowerCase().includes(searchProducts.value)
-    );
-
-    showProducts(products);
   });
+}
 
-  const checkDogs = document.getElementById("dogs");
-  checkDogs.addEventListener("click", function () {
-    if (checkDogs.checked) {
-      categoriesChecked.push(checkDogs.value);
-    } else {
-      const idx = categoriesChecked.indexOf(checkDogs.value);
-      categoriesChecked.splice(idx, 1);
-    }
+async function makeProducts() {
+  const response = await getProducts();
 
-    console.log(categoriesChecked);
-  });
+  responseOrigin = response;
+  showProducts(response);
 
-  const checkCats = document.getElementById("cats");
-  checkCats.addEventListener("click", function () {
-    if (checkCats.checked) {
-      categoriesChecked.push(checkCats.value);
-    } else {
-      const idx = categoriesChecked.indexOf(checkCats.value);
-      categoriesChecked.splice(idx, 1);
-    }
+  return responseOrigin;
+}
 
-    console.log(categoriesChecked);
-  });
+async function getProducts() {
+  let data = [];
+
+  await fetch("./js/products.json")
+    .then((response) => response.json())
+    .then((response) => {
+      data = response;
+    });
+
+  return data;
+}
+
+async function applyFilters(categoriesChecked, products) {
+  const productsFirter = products.filter((product) =>
+    categoriesChecked.includes(product.category)
+  );
+
+  showProducts(productsFirter);
 }
 
 function showProducts(products) {
