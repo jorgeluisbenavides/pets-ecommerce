@@ -1,5 +1,6 @@
   [
     {
+      "id":1,
       "name":"Juguete para perros",
       "description":"",
       "image":"product1.png",
@@ -8,6 +9,7 @@
       "price":80
     }, 
     {
+      "id":2,
       "name":"Alimento para gatos",
       "description":"",
       "image":"product2.png",
@@ -16,6 +18,7 @@
       "price":20
     },
     {
+      "id":3,
       "name":"Jaula para áves",
       "description":"",
       "image":"product3.png",
@@ -24,6 +27,7 @@
       "price":150
     }, 
     {
+      "id":4,
       "name":"Cama para conejo",
       "description":"",
       "image":"product4.png",
@@ -32,6 +36,7 @@
       "price":180
     },
     {
+      "id":5,
       "name":"Pecera",
       "description":"",
       "image":"product5.png",
@@ -40,6 +45,7 @@
       "price":250
     },
     {
+      "id":6,
       "name":"Alimento para pez",
       "description":"",
       "image":"product6.png",
@@ -48,6 +54,7 @@
       "price":50
     },
     {
+      "id":7,
       "name":"Accesorios para perro",
       "description":"",
       "image":"product7.png",
@@ -56,6 +63,7 @@
       "price":180
     },
     {
+      "id":8,
       "name":"Cama para gatos",
       "description":"",
       "image":"product8.png",
@@ -64,6 +72,7 @@
       "price":180
     },
     {
+      "id":9,
       "name":"Alimento para perros",
       "description":"",
       "image":"product9.png",
@@ -72,6 +81,7 @@
       "price":50
     },
     {
+      "id":10,
       "name":"Alimento para pez",
       "description":"",
       "image":"product10.png",

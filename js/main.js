@@ -2,6 +2,8 @@ const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const expresionPassword = /^[{a-z}]{5,10}$/;
 const keyToken = "token";
 
+const loading = document.getElementById("loading");
+
 const formLogin = document.getElementById("formLogin");
 if (formLogin !== null) {
   formLogin.addEventListener("click", function (event) {
@@ -45,6 +47,15 @@ function showUserName() {
   }
 
   isExistMenu.appendChild(li);
+}
+
+function formatPrice(number) {
+  const price = new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN",
+  }).format(number);
+
+  return price;
 }
 
 function closeSession() {
@@ -165,12 +176,9 @@ if (productsHome) {
       );
 
       productsFirter.forEach((producto) => {
-        const price = new Intl.NumberFormat("es-MX", {
-          style: "currency",
-          currency: "MXN",
-        }).format(producto.price);
+        const price = formatPrice(producto.price);
 
-        const cardProduct = `<div class="product-card">
+        const cardProduct = `<div class="product-card" id="product-${producto.id}">
         <img src="./img/products/${producto.image}" alt="${producto.image}"></img>
         <div class="product-name">${producto.name}</div>
         <div class="product-price">${price}</div>
@@ -179,6 +187,11 @@ if (productsHome) {
         const div = document.createElement("div");
         div.innerHTML = cardProduct;
         productsHome.appendChild(div);
+
+        const card = document.getElementById(`product-${producto.id}`);
+        card.addEventListener("click", () => {
+          window.location.href = `detail-produc.html?id=${producto.id}`;
+        });
       });
     });
 }
@@ -234,7 +247,7 @@ async function getCategories() {
   return data;
 }
 
-/*** products search ****/
+/*** search and filters products ****/
 
 const searchProducts = document.getElementById("search-products");
 const categoriesFilters = document.getElementById("categories-filters");
@@ -313,35 +326,39 @@ async function makeProducts() {
 
 async function getProducts() {
   let data = [];
-
+  loading.style.display = "table";
   await fetch("./js/products.json")
     .then((response) => response.json())
     .then((response) => {
       data = response;
+      loading.style.display = "none";
     });
 
   return data;
 }
 
 async function applyFilters(categoriesChecked, products) {
-  const productsFirter = products.filter((product) =>
-    categoriesChecked.includes(product.category)
-  );
-
-  showProducts(productsFirter);
+  if (categoriesChecked.length > 0) {
+    const productsFirter = products.filter((product) =>
+      categoriesChecked.includes(product.category)
+    );
+    showProducts(productsFirter);
+  } else {
+    showProducts(products);
+  }
 }
 
 function showProducts(products) {
   const productsResult = document.getElementById("products-result");
   productsResult.innerHTML = "";
+  loading.style.display = "table";
 
   products.forEach((producto) => {
-    const price = new Intl.NumberFormat("es-MX", {
-      style: "currency",
-      currency: "MXN",
-    }).format(producto.price);
-
-    const cardProduct = `<div class="product-card">
+    const price = formatPrice(producto.price);
+    setTimeout(() => {
+      loading.style.display = "none";
+    }, 500);
+    const cardProduct = `<div class="product-card" id="product-${producto.id}">
             <img src="./img/products/${producto.image}" alt="${producto.image}"></img>
             <div class="product-name">${producto.name}</div>
             <div class="product-price">${price}</div>
@@ -350,5 +367,43 @@ function showProducts(products) {
     const div = document.createElement("div");
     div.innerHTML = cardProduct;
     productsResult.appendChild(div);
+
+    const card = document.getElementById(`product-${producto.id}`);
+    card.addEventListener("click", () => {
+      window.location.href = `detail-produc.html?id=${producto.id}`;
+    });
   });
+}
+
+/**** product detail *****/
+const detailProduct = document.getElementById("detail-product");
+const messageProduct = document.getElementById("message");
+
+if (detailProduct) {
+  const params = new URLSearchParams(window.location.search);
+  const productId = parseInt(params.get("id"));
+  getProduct(productId);
+}
+
+async function getProduct(productId) {
+  const response = await getProducts();
+
+  const product = response.find((product) => product.id === productId);
+  if (!product) {
+    message.textContent =
+      "No existe el producto con el identificador: " + productId;
+  }
+
+  const nameCategory = document.getElementById("nameCategory");
+  const urlImage = document.getElementById("urlImage");
+  const nameProduct = document.getElementById("nameProduct");
+  const descriptionProduc = document.getElementById("descriptionProduc");
+  const priceProduct = document.getElementById("priceProduct");
+
+  nameCategory.textContent = product.category;
+  urlImage.src = `./img/products/${product.image}`;
+  urlImage.alt = product.name;
+  nameProduct.textContent = product.name;
+  descriptionProduc.textContent = product.description;
+  priceProduct.textContent = formatPrice(product.price);
 }

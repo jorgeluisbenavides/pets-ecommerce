@@ -15,11 +15,6 @@
 
 <body style="position: relative;">
   <div id="loading" class="loading">
-    <div class="content">
-      <span class="rotate rotate-infinite material-symbols-outlined">
-        app_badging
-      </span>
-    </div>
   </div>
   <div class="container-primary">
     <section>
@@ -33,44 +28,19 @@
         <div>
           <ul id="menu">
             <li><a href="index.html">Inicio</a></li>
-            <li>
-              <div class="input-seach">
-                <span class="material-symbols-outlined">
-                  shopping_bag_speed
-                </span>
-                <input id="search-products" class="input-seach" type="text" name="search"
-                  placeholder="Buscar productos">
-              </div>
-            </li>
+            <li><a href="products.html">Productos</a></li>
           </ul>
         </div>
       </div>
     </section>
-    <section>
-      <div class="products-contanter">
-        <div class="filters">
-          <h5>Filtros</h5>
-          <p>Categorías</p>
-          <ul id="categories-filters">
-            <!-- <li>
-              <label>
-                <input id="dogs" type="checkbox" name="category" value="dogs">
-                Perros
-              </label>
-            </li> -->
-          </ul>
-        </div>
-        <div class="products-result">
-          <section>
-            <h3>Todos los productos</h3>
-            <div id="products-result" class="products"></div>
-          </section>
-
-        </div>
-      </div>
+    <section id="detail-product">
+      <div id="message" class="message"></div>
+      <p>Productos / <span id="nameCategory"></span></p>
+      <img id="urlImage" class="" alt="">
+      <p id="nameProduct"></p>
+      <p id="descriptionProduc"></p>
+      <h2 id="priceProduct"></h2>
     </section>
   </div>
   <script src="./js/main.js"></script>
 </body>
-
-</html>
