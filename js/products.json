@@ -1,92 +1,152 @@
   [
     {
-      "id":1,
-      "name":"Juguete para perros",
-      "description":"",
-      "image":"product1.png",
+      "id": 1,
+      "name": "Juguete para perros",
+      "description": "obcaecati, aliquam voluptatibus quibusdam ipsa ducimus dolores omnis nostrum labore animi! Cumque excepturi quia omnis necessitatibus repudiandae error ducimus.",
+      "image": "product1.png",
       "category": "dogs",
-      "isOutstanding":true,
-      "price":80
+      "isOutstanding": true,
+      "price": 80,
+      "comments": [
+        {
+          "id": 1,
+          "comment": "A mi perro le encanta este alimento. Ha mejorado su pelaje y tiene más energía. Lo recomiendo ampliamente.",
+          "starts": 5,
+          "likes": 25,
+          "dislikes": 2,
+          "date": "2025-08-21",
+          "user": {
+            "name": "Lucía García",
+            "avatar": "avatar1.png"
+          }
+        },
+        {
+          "id": 2,
+          "comment": "Buen producto en general. A mi perro le gusta, pero a veces parece que no lo llena tanto como otros alimentos.",
+          "starts": 3,
+          "likes": 10,
+          "dislikes": 2,
+          "date": "2025-08-15",
+          "user": {
+            "name": "Javier López",
+            "avatar": "avatar2.png"
+          }
+        }
+      ]
     }, 
     {
       "id":2,
       "name":"Alimento para gatos",
-      "description":"",
+      "description":"obcaecati, aliquam voluptatibus quibusdam ipsa ducimus dolores omnis nostrum labore animi! Cumque excepturi quia omnis necessitatibus repudiandae error ducimus.",
       "image":"product2.png",
       "category": "cats",
       "isOutstanding":true,
-      "price":20
+      "price":20,
+      "comments": []
     },
     {
       "id":3,
       "name":"Jaula para áves",
-      "description":"",
+      "description":"obcaecati, aliquam voluptatibus quibusdam ipsa ducimus dolores omnis nostrum labore animi! Cumque excepturi quia omnis necessitatibus repudiandae error ducimus.",
       "image":"product3.png",
       "category": "birt",
       "isOutstanding":true,
-      "price":150
+      "price":150,
+      "comments": [
+        {
+          "id": 3,
+          "comment": "A mi perro le encanta este alimento. Ha mejorado su pelaje y tiene más energía. Lo recomiendo ampliamente.",
+          "starts": 5,
+          "likes": 25,
+          "dislikes": 2,
+          "date": "2025-08-01",
+          "user": {
+            "name": "María García",
+            "avatar": "avatar1.png"
+          }
+        },
+        {
+          "id": 4,
+          "comment": "Buen producto en general. A mi perro le gusta, pero a veces parece que no lo llena tanto como otros alimentos.",
+          "starts": 3,
+          "likes": 10,
+          "dislikes": 2,
+          "date": "2025-07-15",
+          "user": {
+            "name": "Carlos Sánchez",
+            "avatar": "avatar2.png"
+          }
+        }
+      ]
     }, 
     {
       "id":4,
       "name":"Cama para conejo",
-      "description":"",
+      "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptatem ipsum ",
       "image":"product4.png",
       "category": "rabbit",
       "isOutstanding":true,
-      "price":180
+      "price":180,
+      "comments": []
     },
     {
       "id":5,
       "name":"Pecera",
-      "description":"",
+      "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptatem ipsum ",
       "image":"product5.png",
       "category": "fish",
       "isOutstanding":true,
-      "price":250
+      "price":250,
+      "comments": []
     },
     {
       "id":6,
       "name":"Alimento para pez",
-      "description":"",
+      "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptatem ipsum ",
       "image":"product6.png",
       "category": "fish",
       "isOutstanding":false,
-      "price":50
+      "price":50,
+      "comments": []
     },
     {
       "id":7,
       "name":"Accesorios para perro",
-      "description":"",
+      "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptatem ipsum ",
       "image":"product7.png",
       "category": "dogs",
       "isOutstanding":false,
-      "price":180
+      "price":180,
+      "comments": []
     },
     {
       "id":8,
       "name":"Cama para gatos",
-      "description":"",
+      "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptatem ipsum ",
       "image":"product8.png",
       "category": "cats",
       "isOutstanding":false,
-      "price":180
+      "price":180,
+      "comments": []
     },
     {
       "id":9,
       "name":"Alimento para perros",
-      "description":"",
+      "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptatem ipsum ",
       "image":"product9.png",
       "category": "dogs",
       "isOutstanding":false,
-      "price":50
+      "price":50,
+      "comments": []
     },
     {
       "id":10,
       "name":"Alimento para pez",
-      "description":"",
+      "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, voluptatem ipsum ",
       "image":"product10.png",
       "category": "fish",
       "isOutstanding":false,
-      "price":50
+      "price":50,
+      "comments": []
     }
   ]

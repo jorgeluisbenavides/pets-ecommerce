@@ -400,7 +400,7 @@ async function getProduct(productId) {
   const descriptionProduc = document.getElementById("descriptionProduc");
   const priceProduct = document.getElementById("priceProduct");
 
-  nameCategory.textContent = product.category;
+  nameCategory.textContent = product.category.toUpperCase();
   urlImage.src = `./img/products/${product.image}`;
   urlImage.alt = product.name;
   nameProduct.textContent = product.name;
