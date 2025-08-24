@@ -7,11 +7,11 @@
       "category": "dogs",
       "isOutstanding": true,
       "price": 80,
-      "comments": [
+      "reviewsComment": [
         {
           "id": 1,
           "comment": "A mi perro le encanta este alimento. Ha mejorado su pelaje y tiene más energía. Lo recomiendo ampliamente.",
-          "starts": 5,
+          "stars": 5,
           "likes": 25,
           "dislikes": 2,
           "date": "2025-08-21",
@@ -23,7 +23,7 @@
         {
           "id": 2,
           "comment": "Buen producto en general. A mi perro le gusta, pero a veces parece que no lo llena tanto como otros alimentos.",
-          "starts": 3,
+          "stars": 3,
           "likes": 10,
           "dislikes": 2,
           "date": "2025-08-15",
@@ -42,7 +42,7 @@
       "category": "cats",
       "isOutstanding":true,
       "price":20,
-      "comments": []
+      "reviewsComment": []
     },
     {
       "id":3,
@@ -52,11 +52,11 @@
       "category": "birt",
       "isOutstanding":true,
       "price":150,
-      "comments": [
+      "reviewsComment": [
         {
           "id": 3,
           "comment": "A mi perro le encanta este alimento. Ha mejorado su pelaje y tiene más energía. Lo recomiendo ampliamente.",
-          "starts": 5,
+          "stars": 5,
           "likes": 25,
           "dislikes": 2,
           "date": "2025-08-01",
@@ -68,7 +68,7 @@
         {
           "id": 4,
           "comment": "Buen producto en general. A mi perro le gusta, pero a veces parece que no lo llena tanto como otros alimentos.",
-          "starts": 3,
+          "stars": 3,
           "likes": 10,
           "dislikes": 2,
           "date": "2025-07-15",
@@ -87,7 +87,7 @@
       "category": "rabbit",
       "isOutstanding":true,
       "price":180,
-      "comments": []
+      "reviewsComment": []
     },
     {
       "id":5,
@@ -97,7 +97,7 @@
       "category": "fish",
       "isOutstanding":true,
       "price":250,
-      "comments": []
+      "reviewsComment": []
     },
     {
       "id":6,
@@ -107,7 +107,7 @@
       "category": "fish",
       "isOutstanding":false,
       "price":50,
-      "comments": []
+      "reviewsComment": []
     },
     {
       "id":7,
@@ -117,7 +117,7 @@
       "category": "dogs",
       "isOutstanding":false,
       "price":180,
-      "comments": []
+      "reviewsComment": []
     },
     {
       "id":8,
@@ -127,7 +127,7 @@
       "category": "cats",
       "isOutstanding":false,
       "price":180,
-      "comments": []
+      "reviewsComment": []
     },
     {
       "id":9,
@@ -137,7 +137,7 @@
       "category": "dogs",
       "isOutstanding":false,
       "price":50,
-      "comments": []
+      "reviewsComment": []
     },
     {
       "id":10,
@@ -147,6 +147,6 @@
       "category": "fish",
       "isOutstanding":false,
       "price":50,
-      "comments": []
+      "reviewsComment": []
     }
   ]

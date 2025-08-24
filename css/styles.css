@@ -435,7 +435,16 @@ form button:hover {
 .detail-product-container .reviews {
   margin-top: 10px;
 }
-.reviews .comments .container-user {
+
+.total-average {
+  font-size: 40px;
+}
+
+.total-reviews {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.reviews .review-comment .container-user {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -447,11 +456,11 @@ form button:hover {
   }
 }
 
-.reviews .comments .container-user > div {
+.reviews .review-comment .container-user > div {
   align-items: flex-start;
 }
 
-.reviews .comments .stars span {
+.reviews .stars span {
   color: var(--main-color-primary);
 }
 

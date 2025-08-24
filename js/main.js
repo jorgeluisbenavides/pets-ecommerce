@@ -378,6 +378,7 @@ function showProducts(products) {
 /**** product detail *****/
 const detailProduct = document.getElementById("detail-product");
 const messageProduct = document.getElementById("message");
+const commentsUser = document.getElementById("comments-users");
 
 if (detailProduct) {
   const params = new URLSearchParams(window.location.search);
@@ -399,6 +400,10 @@ async function getProduct(productId) {
   const nameProduct = document.getElementById("nameProduct");
   const descriptionProduc = document.getElementById("descriptionProduc");
   const priceProduct = document.getElementById("priceProduct");
+  const commentsUsers = document.getElementById("comments-users");
+  const averageTotal = document.getElementById("average");
+  const averageStars = document.getElementById("average-stars");
+  const reviewsTotal = document.getElementById("total-reviews");
 
   nameCategory.textContent = product.category.toUpperCase();
   urlImage.src = `./img/products/${product.image}`;
@@ -406,4 +411,75 @@ async function getProduct(productId) {
   nameProduct.textContent = product.name;
   descriptionProduc.textContent = product.description;
   priceProduct.textContent = formatPrice(product.price);
+
+  product.reviewsComment.forEach((review) => {
+    const divReviewComment = document.createElement("div");
+    divReviewComment.classList.add("review-comment");
+    const starsHtml = renderstars(review.stars);
+    const imageUser = review.user.avatar;
+    const nameUser = review.user.name;
+    const dateComment = review.date;
+    const commentUser = review.comment;
+    const likes = review.likes;
+    const dislikes = review.dislikes;
+
+    divReviewComment.innerHTML = `
+        <div class="container-user">
+          <div class="avatar">
+            <img src="./img/avatars/${imageUser}">
+          </div>
+          <div class="information-user">
+            <div class="name-user">${nameUser}</div>
+            <div class="date">${dateComment}</div>
+          </div>
+        </div>
+        <div class="stars" id="stars-user">
+          ${starsHtml}
+        </div>
+        <div class="comment">${commentUser}</div>
+        <div class="likes-options">
+          <div>
+            <span class="material-icons">
+              thumb_up
+            </span>
+            <span>${likes}</span>
+          </div>
+          <div>
+            <span class="material-icons">
+              thumb_down
+            </span>
+            <span>${dislikes}</span>
+          </div>
+        </div>
+      `;
+
+    commentsUsers.appendChild(divReviewComment);
+  });
+  const { average, total } = getAverageStars(product.reviewsComment);
+  const starsAverage = renderstars(average);
+  averageTotal.textContent = average;
+  reviewsTotal.textContent = total;
+  averageStars.innerHTML = starsAverage;
+}
+
+function renderstars(count) {
+  let starsHtml = "";
+  for (let i = 1; i <= 5; i++) {
+    starsHtml += `<span class="material-icons">
+                  ${i <= count ? "star" : "star_border"}
+                </span>`;
+  }
+
+  return starsHtml;
+}
+
+function getAverageStars(reviewsComments) {
+  const initialValue = 0;
+  const total = reviewsComments.reduce(
+    (current, item) => current + item.stars,
+    initialValue
+  );
+
+  const average = (total / reviewsComments.length).toFixed(1);
+  return { average, total };
 }
