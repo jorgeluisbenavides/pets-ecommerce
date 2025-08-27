@@ -1,6 +1,7 @@
 const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const expresionPassword = /^[{a-z}]{5,10}$/;
 const keyToken = "token";
+const KeyCartProducts = "cart-products";
 
 const loading = document.getElementById("loading");
 
@@ -379,11 +380,39 @@ function showProducts(products) {
 const detailProduct = document.getElementById("detail-product");
 const messageProduct = document.getElementById("message");
 const commentsUser = document.getElementById("comments-users");
+const buttonAddProduc = document.getElementById("add-product");
+
+const cartProductsArray = [];
 
 if (detailProduct) {
   const params = new URLSearchParams(window.location.search);
   const productId = parseInt(params.get("id"));
   getProduct(productId);
+}
+
+if (buttonAddProduc) {
+  buttonAddProduc.addEventListener("click", function () {
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get("id"));
+    getProductToAdd(productId);
+  });
+}
+
+async function getProductToAdd(productId) {
+  const response = await getProducts();
+
+  const { id, price, name, image } = response.find(
+    (product) => product.id === productId
+  );
+
+  const product = { id, price, name, image, quantity: 1 };
+  // console.log(obj);
+  // const encript = btoa(JSON.stringify(obj));
+  // console.log(encript);
+  // const decript = atob(encript);
+  // console.log(decript);
+  // console.log(JSON.parse(decript));
+  addCartProduct(product);
 }
 
 async function getProduct(productId) {
@@ -474,6 +503,8 @@ function renderstars(count) {
 }
 
 function getAverageStars(reviewsComments) {
+  if (!reviewsComments.length) return { average: 0, total: 0 };
+
   const initialValue = 0;
   const total = reviewsComments.reduce(
     (current, item) => current + item.stars,
@@ -481,5 +512,48 @@ function getAverageStars(reviewsComments) {
   );
 
   const average = (total / reviewsComments.length).toFixed(1);
+
   return { average, total };
+}
+
+function findIndex(cartProducts, productId) {
+  return cartProducts.findIndex((product) => product.id === productId);
+}
+
+function addCartProduct(product) {
+  const exist = localStorage.getItem(KeyCartProducts);
+  if (exist) {
+    const cartProductsArray = JSON.parse(atob(exist));
+
+    const idx = findIndex(cartProductsArray, product.id);
+
+    if (idx < 0) {
+      cartProductsArray.push(product);
+      localStorage.setItem(
+        KeyCartProducts,
+        btoa(JSON.stringify(cartProductsArray))
+      );
+      alert("Producto añadido al carrito de compras.");
+    } else {
+      cartProductsArray[idx].quantity =
+        cartProductsArray[idx].quantity + product.quantity;
+
+      localStorage.setItem(
+        KeyCartProducts,
+        btoa(JSON.stringify(cartProductsArray))
+      );
+      alert(`Cambio la cantidad del producto: ${product.name}`);
+    }
+  } else {
+    cartProductsArray.push(product);
+    localStorage.setItem(
+      KeyCartProducts,
+      btoa(JSON.stringify(cartProductsArray))
+    );
+    alert("Añadiendo el primer producto al carrito.");
+  }
+}
+
+function clearCartProducts() {
+  localStorage.removeItem(KeyCartProducts);
 }
