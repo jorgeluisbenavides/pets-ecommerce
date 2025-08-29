@@ -8,6 +8,7 @@
   --main-color-gray: #eee;
   --main-color-black: #000;
   --main-border: 5px;
+  --main-box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.15);
 }
 
 body {
@@ -122,9 +123,39 @@ body {
   justify-content: center;
   align-items: center;
   gap: 4px;
-}
-.icon-box {
   cursor: pointer;
+}
+
+.icon-box:has(.counter) {
+  position: relative;
+}
+
+.counter {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background: var(--main-color-primary);
+  border-radius: 100%;
+  padding: 1px;
+  color: var(--main-color-white);
+  right: -10px;
+  top: -10px;
+  box-shadow: var(--main-box-shadow);
+}
+
+.container-mini-cart {
+  display: none;
+  padding: 10px;
+  position: absolute;
+  width: 200px;
+  height: auto;
+  background: var(--main-color-gray);
+  top: 50px;
+  right: 25%;
+  z-index: 99;
+  box-shadow: var(--main-box-shadow);
+  border-radius: var(--main-border);
 }
 /********Forms*******************/
 input:focus {
@@ -221,7 +252,7 @@ form button:hover {
   overflow: hidden;
   position: relative;
   margin: 0 auto;
-  box-shadow: 0px 5px 5px rgb(0, 0, 0, 0.15);
+  box-shadow: var(--main-box-shadow);
 }
 
 .carousel-track {
