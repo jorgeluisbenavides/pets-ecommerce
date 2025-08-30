@@ -53,46 +53,60 @@ function showUserName() {
 
 function showCart() {
   const cartProducto = localStorage.getItem(KeyCartProducts);
-  if (cartProducto) {
-    const cartProductsArray = JSON.parse(atob(cartProducto));
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    const div = document.createElement("div");
-    div.classList.add("container-mini-cart");
-    div.id = "mini-cart";
-    const totalItems = cartProductsArray.length;
+  let cartProductsArray = [];
+  if (cartProducto) cartProductsArray = JSON.parse(atob(cartProducto));
 
-    const contenHtml = getCartContent(cartProductsArray);
-    div.innerHTML = contenHtml;
-    const icono =
-      "<span class='material-symbols-outlined' style='font-size: 15px;'>" +
-      "shopping_cart" +
-      "</span>";
+  const li = document.createElement("li");
+  const a = document.createElement("a");
+  const div = document.createElement("div");
+  div.classList.add("container-mini-cart");
+  div.id = "mini-cart";
 
-    a.innerHTML =
-      "<div class='icon-box'>" +
-      "<span id='goCart'>Carrito</span>" +
-      icono +
-      "<span class='counter' id='counter' title='Mostrar detalle'>" +
-      totalItems +
-      "</span>" +
-      "</div>";
+  const iconoClear =
+    "<span class='material-symbols-outlined' style='font-size: 15px;'>" +
+    "delete" +
+    "</span>";
 
-    li.appendChild(a);
-    li.appendChild(div);
-    isExistMenu.appendChild(li);
+  const { htmlContent, totalProducts } = getCartContent(cartProductsArray);
+  let contenHtml = "<table>";
+  contenHtml +=
+    "<thead><th>Productos</th><th>Precio</th><th>Cantidad</th></thead>";
+  contenHtml += htmlContent;
+  contenHtml += "</table>";
+  contenHtml +=
+    "<button class='icon-box' id='clear-cart'>" +
+    iconoClear +
+    " <span>Vaciar</span></button>";
 
-    const goCartEvent = document.getElementById("goCart");
-    goCartEvent.addEventListener("click", () => {
-      console.log("eventro de goCartEvent");
-    });
+  div.innerHTML = contenHtml;
+  const icono =
+    "<span class='material-symbols-outlined' style='font-size: 15px;'>" +
+    "shopping_cart" +
+    "</span>";
 
-    const counterEvent = document.getElementById("counter");
-    counterEvent.addEventListener("click", () => {
-      const miniCart = document.getElementById("mini-cart");
-      miniCart.style.display = toogle(miniCart.style.display);
-    });
-  }
+  a.innerHTML =
+    "<div class='icon-box'>" +
+    "<span id='goCart'>Carrito</span>" +
+    icono +
+    "<span class='counter' id='counter' title='Mostrar detalle'>" +
+    totalProducts +
+    "</span>" +
+    "</div>";
+
+  li.appendChild(a);
+  li.appendChild(div);
+  isExistMenu.appendChild(li);
+
+  const goCartEvent = document.getElementById("goCart");
+  goCartEvent.addEventListener("click", () => {
+    window.location.href = "cart-products.html";
+  });
+
+  const counterEvent = document.getElementById("counter");
+  counterEvent.addEventListener("click", () => {
+    const miniCart = document.getElementById("mini-cart");
+    miniCart.style.display = toogle(miniCart.style.display);
+  });
 }
 
 function toogle(str) {
@@ -582,6 +596,7 @@ function addCartProduct(product) {
         KeyCartProducts,
         btoa(JSON.stringify(cartProductsArray))
       );
+      print(cartProductsArray);
       alert("Producto añadido al carrito de compras.");
     } else {
       cartProductsArray[idx].quantity =
@@ -591,6 +606,7 @@ function addCartProduct(product) {
         KeyCartProducts,
         btoa(JSON.stringify(cartProductsArray))
       );
+      print(cartProductsArray);
       alert(`Cambio la cantidad del producto: ${product.name}`);
     }
   } else {
@@ -599,8 +615,21 @@ function addCartProduct(product) {
       KeyCartProducts,
       btoa(JSON.stringify(cartProductsArray))
     );
+    print(cartProductsArray);
     alert("Añadiendo el primer producto al carrito.");
   }
+}
+
+function print(cartProductsArray) {
+  const tbodyCart = document.getElementById("tbody-cart");
+  tbodyCart.innerHTML = "";
+
+  const { htmlContent, totalProducts } = getCartContent(cartProductsArray);
+
+  const counter = document.getElementById("counter");
+  counter.textContent = String(totalProducts);
+
+  tbodyCart.innerHTML = htmlContent;
 }
 
 function clearCartProducts() {
@@ -609,18 +638,34 @@ function clearCartProducts() {
 
 /*** Detail Cart Products***/
 function getCartContent(cartProductsArray) {
-  let htmlContent = "<table><thead><th>Products</th></thead><tbody>";
+  let htmlContent = "<tbody id='tbody-cart'>";
   let totalToPay = 0;
+  let totalProducts = 0;
   cartProductsArray.forEach((productCart) => {
-    console.log(productCart);
+    totalToPay = totalToPay + productCart.quantity * productCart.price;
+    totalProducts = totalProducts + productCart.quantity;
     htmlContent += `<tr>
     <td>${productCart.name} </td>
-    <td>${productCart.price}</td>
+    <td>${formatPrice(productCart.price)}</td>
     <td>${productCart.quantity}</td>
     </tr>`;
   });
 
-  htmlContent += "<tr><td>" + totalToPay + "</td></tr></tbody></table>";
+  htmlContent += "<tr><td>" + formatPrice(totalToPay) + "</td></tr></tbody>";
 
-  return htmlContent;
+  return { htmlContent, totalProducts };
+}
+
+const clearCart = document.getElementById("clear-cart");
+clearCart.addEventListener("click", () => {
+  deleteCartProducts();
+});
+
+function deleteCartProducts() {
+  localStorage.removeItem(KeyCartProducts);
+  const tbodyCart = document.getElementById("tbody-cart");
+  const counter = document.getElementById("counter");
+
+  tbodyCart.innerHTML = "";
+  counter.textContent = "0";
 }

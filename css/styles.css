@@ -157,6 +157,10 @@ body {
   box-shadow: var(--main-box-shadow);
   border-radius: var(--main-border);
 }
+
+.container-mini-cart button {
+  margin: 0 auto;
+}
 /********Forms*******************/
 input:focus {
   background-color: var(--main-color-input-focus);
