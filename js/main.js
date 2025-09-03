@@ -67,12 +67,15 @@ function showCart() {
     "delete" +
     "</span>";
 
-  const { htmlContent, totalProducts } = getCartContent(cartProductsArray);
+  const { htmlContent, totalProducts, totalToPay } =
+    getCartContent(cartProductsArray);
   let contenHtml = "<table>";
   contenHtml +=
-    "<thead><th>Productos</th><th>Precio</th><th>Cantidad</th></thead>";
+    "<thead><th>Productos</th><th>Precio</th><th>Cantidad</th><th>Total</th></thead>";
   contenHtml += htmlContent;
   contenHtml += "</table>";
+  contenHtml += `<h2>Total a pagar: <strong id="total-pay">
+  ${formatPrice(totalToPay)}</strong></h2>`;
   contenHtml +=
     "<button class='icon-box' id='clear-cart'>" +
     iconoClear +
@@ -596,7 +599,7 @@ function addCartProduct(product) {
         KeyCartProducts,
         btoa(JSON.stringify(cartProductsArray))
       );
-      print(cartProductsArray);
+      printCartProducts(cartProductsArray);
       alert("Producto añadido al carrito de compras.");
     } else {
       cartProductsArray[idx].quantity =
@@ -606,7 +609,7 @@ function addCartProduct(product) {
         KeyCartProducts,
         btoa(JSON.stringify(cartProductsArray))
       );
-      print(cartProductsArray);
+      printCartProducts(cartProductsArray);
       alert(`Cambio la cantidad del producto: ${product.name}`);
     }
   } else {
@@ -615,21 +618,29 @@ function addCartProduct(product) {
       KeyCartProducts,
       btoa(JSON.stringify(cartProductsArray))
     );
-    print(cartProductsArray);
+    printCartProducts(cartProductsArray);
     alert("Añadiendo el primer producto al carrito.");
   }
 }
 
-function print(cartProductsArray) {
+function printCartProducts(cartProductsArray) {
   const tbodyCart = document.getElementById("tbody-cart");
+  const tbodyCartProducts = document.getElementById("tbody-cart-products");
+  const totalPay = document.getElementById("totalToPay");
+
   tbodyCart.innerHTML = "";
 
-  const { htmlContent, totalProducts } = getCartContent(cartProductsArray);
+  const { htmlContent, totalProducts, totalToPay } =
+    getCartContent(cartProductsArray);
 
   const counter = document.getElementById("counter");
   counter.textContent = String(totalProducts);
 
   tbodyCart.innerHTML = htmlContent;
+  if (tbodyCartProducts) {
+    tbodyCartProducts.innerHTML = htmlContent;
+    totalPay.textContent = formatPrice(totalToPay);
+  }
 }
 
 function clearCartProducts() {
@@ -645,15 +656,20 @@ function getCartContent(cartProductsArray) {
     totalToPay = totalToPay + productCart.quantity * productCart.price;
     totalProducts = totalProducts + productCart.quantity;
     htmlContent += `<tr>
-    <td>${productCart.name} </td>
-    <td>${formatPrice(productCart.price)}</td>
-    <td>${productCart.quantity}</td>
+    <td>
+      <div class="icon-box"><div class="img" style="background-image: url(./img/products/${
+        productCart.image
+      })" alt="${productCart.image}"></div> <div class="name">${
+      productCart.name
+    } </div></div>
+    </td>
+    <td class="amount">${formatPrice(productCart.price)}</td>
+    <td class="amount">${productCart.quantity}</td>
+    <td>${formatPrice(productCart.quantity * productCart.price)}</td>
     </tr>`;
   });
 
-  htmlContent += "<tr><td>" + formatPrice(totalToPay) + "</td></tr></tbody>";
-
-  return { htmlContent, totalProducts };
+  return { htmlContent, totalProducts, totalToPay };
 }
 
 const clearCart = document.getElementById("clear-cart");
@@ -665,7 +681,18 @@ function deleteCartProducts() {
   localStorage.removeItem(KeyCartProducts);
   const tbodyCart = document.getElementById("tbody-cart");
   const counter = document.getElementById("counter");
+  const totaPay = document.getElementById("total-pay");
 
   tbodyCart.innerHTML = "";
   counter.textContent = "0";
+  totaPay.textContent = formatPrice(0);
+}
+
+const pageCartProducts = document.getElementById("page-cart-produts");
+if (pageCartProducts) {
+  const cartProductos = localStorage.getItem(KeyCartProducts);
+  let cartProductsArray = [];
+  if (cartProductos) cartProductsArray = JSON.parse(atob(cartProductos));
+
+  printCartProducts(cartProductsArray);
 }

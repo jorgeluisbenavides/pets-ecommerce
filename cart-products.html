@@ -35,7 +35,30 @@
       </div>
     </section>
     <section class="page-cart-product" id="page-cart-produts">
+      <h1>Carrito de compras</h1>
+      <table>
+        <thead>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </thead>
+        <tbody id="tbody-cart-products"></tbody>
+      </table>
 
+      <h2>Resumen del pedido</h2>
+      <div class="resumen-cart">
+        <div class="concept">Subtotal</div>
+        <div>114.9</div>
+        <div class="concept">Envio estimado</div>
+        <div>5.99</div>
+        <div class="concept">Total</div>
+        <div id="totalToPay"></div>
+      </div>
+
+      <form>
+        <button type="button">Procesar pago</button>
+      </form>
     </section>
 
   </div>
