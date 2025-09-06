@@ -67,8 +67,11 @@ function showCart() {
     "delete" +
     "</span>";
 
-  const { htmlContent, totalProducts, totalToPay } =
-    getCartContent(cartProductsArray);
+  const { htmlContent, totalProducts, totalToPay } = getCartContent(
+    cartProductsArray,
+    "mini"
+  );
+
   let contenHtml = "<table>";
   contenHtml +=
     "<thead><th>Productos</th><th>Precio</th><th>Cantidad</th><th>Total</th></thead>";
@@ -246,10 +249,10 @@ if (productsHome) {
         const price = formatPrice(producto.price);
 
         const cardProduct = `<div class="product-card" id="product-${producto.id}">
-        <img src="./img/products/${producto.image}" alt="${producto.image}"></img>
-        <div class="product-name">${producto.name}</div>
-        <div class="product-price">${price}</div>
-      </div>`;
+          <img src="./img/products/${producto.image}" alt="${producto.image}"></img>
+          <div class="product-name">${producto.name}</div>
+          <div class="product-price">${price}</div>
+        </div>`;
 
         const div = document.createElement("div");
         div.innerHTML = cardProduct;
@@ -471,14 +474,14 @@ async function getProductToAdd(productId) {
     (product) => product.id === productId
   );
 
-  const product = { id, price, name, image, quantity: 1 };
+  const product = { id, price, name, image, quantity: 0 };
   // console.log(obj);
   // const encript = btoa(JSON.stringify(obj));
   // console.log(encript);
   // const decript = atob(encript);
   // console.log(decript);
   // console.log(JSON.parse(decript));
-  addCartProduct(product);
+  addCartProduct(product, 1);
 }
 
 async function getProduct(productId) {
@@ -586,7 +589,36 @@ function findIndex(cartProducts, productId) {
   return cartProducts.findIndex((product) => product.id === productId);
 }
 
-function addCartProduct(product) {
+function deleteCartProduct(productId) {
+  const exist = localStorage.getItem(KeyCartProducts);
+  if (exist) {
+    const cartProductsArray = JSON.parse(atob(exist));
+    const products = cartProductsArray.filter(
+      (product) => product.id !== productId
+    );
+
+    localStorage.setItem(KeyCartProducts, btoa(JSON.stringify(products)));
+    printCartProducts(products);
+  }
+}
+
+function changeQuantityProduct(product, quantity) {
+  const exist = localStorage.getItem(KeyCartProducts);
+  if (exist) {
+    const cartProductsArray = JSON.parse(atob(exist));
+
+    const idx = findIndex(cartProductsArray, product.id);
+    cartProductsArray[idx].quantity = quantity;
+
+    localStorage.setItem(
+      KeyCartProducts,
+      btoa(JSON.stringify(cartProductsArray))
+    );
+    printCartProducts(cartProductsArray);
+  }
+}
+
+function addCartProduct(product, quantity) {
   const exist = localStorage.getItem(KeyCartProducts);
   if (exist) {
     const cartProductsArray = JSON.parse(atob(exist));
@@ -594,6 +626,7 @@ function addCartProduct(product) {
     const idx = findIndex(cartProductsArray, product.id);
 
     if (idx < 0) {
+      product.quantity = quantity;
       cartProductsArray.push(product);
       localStorage.setItem(
         KeyCartProducts,
@@ -603,7 +636,7 @@ function addCartProduct(product) {
       alert("Producto añadido al carrito de compras.");
     } else {
       cartProductsArray[idx].quantity =
-        cartProductsArray[idx].quantity + product.quantity;
+        cartProductsArray[idx].quantity + quantity;
 
       localStorage.setItem(
         KeyCartProducts,
@@ -613,6 +646,7 @@ function addCartProduct(product) {
       alert(`Cambio la cantidad del producto: ${product.name}`);
     }
   } else {
+    product.quantity = quantity;
     cartProductsArray.push(product);
     localStorage.setItem(
       KeyCartProducts,
@@ -624,22 +658,44 @@ function addCartProduct(product) {
 }
 
 function printCartProducts(cartProductsArray) {
-  const tbodyCart = document.getElementById("tbody-cart");
+  const tbodyCartMini = document.getElementById("tbody-cart");
   const tbodyCartProducts = document.getElementById("tbody-cart-products");
   const totalPay = document.getElementById("totalToPay");
 
-  tbodyCart.innerHTML = "";
+  tbodyCartMini.innerHTML = "";
 
-  const { htmlContent, totalProducts, totalToPay } =
-    getCartContent(cartProductsArray);
+  const { htmlContent: miniContect } = getCartContent(
+    cartProductsArray,
+    "mini"
+  );
+  const { htmlContent, totalProducts, totalToPay } = getCartContent(
+    cartProductsArray,
+    "cart"
+  );
 
   const counter = document.getElementById("counter");
   counter.textContent = String(totalProducts);
 
-  tbodyCart.innerHTML = htmlContent;
+  tbodyCartMini.innerHTML = miniContect;
   if (tbodyCartProducts) {
     tbodyCartProducts.innerHTML = htmlContent;
     totalPay.textContent = formatPrice(totalToPay);
+
+    cartProductsArray.forEach((productCart) => {
+      const inputQty = document.getElementById(
+        `cart-quantity-${productCart.id}`
+      );
+
+      inputQty.addEventListener("change", (e) => {
+        const value = parseInt(e.target.value) || 0;
+        if (value === 0) {
+          confirm("Deseas elimiar el producto del carrito?");
+          deleteCartProduct(productCart.id);
+        } else if (value > 0) {
+          changeQuantityProduct(productCart, value);
+        }
+      });
+    });
   }
 }
 
@@ -648,13 +704,27 @@ function clearCartProducts() {
 }
 
 /*** Detail Cart Products***/
-function getCartContent(cartProductsArray) {
+function getCartContent(cartProductsArray, cartType) {
   let htmlContent = "<tbody id='tbody-cart'>";
   let totalToPay = 0;
   let totalProducts = 0;
   cartProductsArray.forEach((productCart) => {
     totalToPay = totalToPay + productCart.quantity * productCart.price;
     totalProducts = totalProducts + productCart.quantity;
+    let inputNumberQty = "";
+    if (cartType === "mini") {
+      inputNumberQty = `${productCart.quantity}`;
+    } else {
+      inputNumberQty = `<input 
+                          class="number-qty" 
+                          id="${cartType}-quantity-${productCart.id}"
+                          name="quantity-${productCart.id}" 
+                          type="number" 
+                          min="0" 
+                          max="10"  
+                          value="${productCart.quantity}" 
+                        >`;
+    }
     htmlContent += `<tr>
     <td>
       <div class="icon-box"><div class="img" style="background-image: url(./img/products/${
@@ -664,7 +734,9 @@ function getCartContent(cartProductsArray) {
     } </div></div>
     </td>
     <td class="amount">${formatPrice(productCart.price)}</td>
-    <td class="amount">${productCart.quantity}</td>
+    <td class="amount">
+      ${inputNumberQty}
+    </td>
     <td>${formatPrice(productCart.quantity * productCart.price)}</td>
     </tr>`;
   });
