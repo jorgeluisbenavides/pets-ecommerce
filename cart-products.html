@@ -12,6 +12,8 @@
 
 
   <link rel="stylesheet" href="./css/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 </head>
 
 <body style="position: relative;">
@@ -56,8 +58,8 @@
         <div id="totalToPay"></div>
       </div>
 
-      <form>
-        <button type="button">Procesar pago</button>
+      <form id="form-process-pay">
+        <button type="submit">Generar pedido</button>
       </form>
     </section>
 

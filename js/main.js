@@ -2,6 +2,8 @@ const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const expresionPassword = /^[{a-z}]{5,10}$/;
 const keyToken = "token";
 const KeyCartProducts = "cart-products";
+const apiWhatsApp = "https://api.whatsapp.com/";
+const PhoneOfWhatsApp = "%2B522221706028";
 
 const loading = document.getElementById("loading");
 
@@ -767,4 +769,95 @@ if (pageCartProducts) {
   if (cartProductos) cartProductsArray = JSON.parse(atob(cartProductos));
 
   printCartProducts(cartProductsArray);
+}
+
+const procesPay = document.getElementById("form-process-pay");
+if (procesPay) {
+  procesPay.addEventListener("click", function (event) {
+    const message = "Hola+quiero+informes+de: \n";
+    rediretWhatsApp(event, message);
+    exportarPDF(event);
+  });
+}
+
+function rediretWhatsApp(event, message) {
+  event.preventDefault();
+
+  const cartProducts = localStorage.getItem(KeyCartProducts);
+  let cartProductsArray = [];
+  if (cartProducts) cartProductsArray = JSON.parse(atob(cartProducts));
+
+  const textCartProducts = cartProductsArray.map((product) => {
+    return {
+      nombre: product.name,
+      precio: product.price,
+      cantidad: product.quantity,
+      sub_total: formatPrice(product.price * product.quantity),
+    };
+  });
+
+  let texto = `${message} esta lista de productos: \n`;
+  textCartProducts.forEach((item, index) => {
+    texto += `${index + 1}. ${item.nombre}, cantidad: ${
+      item.cantidad
+    }, sub total: ${item.sub_total} \n`;
+  });
+
+  const url = `${apiWhatsApp}send?phone=${PhoneOfWhatsApp}&text=${texto}`;
+  window.open(url, "_blank");
+}
+
+function exportarPDF(event) {
+  event.preventDefault();
+
+  const cartProducts = localStorage.getItem(KeyCartProducts);
+  let cartProductsArray = [];
+  if (cartProducts) cartProductsArray = JSON.parse(atob(cartProducts));
+
+  const textCartProducts = cartProductsArray.map((product) => {
+    return {
+      nombre: product.name,
+      precio: formatPrice(product.price),
+      cantidad: product.quantity,
+      sub_total: formatPrice(product.price * product.quantity),
+    };
+  });
+
+  const arrayOfArrays = [];
+  arrayOfArrays.push(["Nº", "Producto", "Precio", "Cantidad", "SubTotal"]);
+  textCartProducts.forEach((item, index) => {
+    arrayOfArrays.push([
+      index + 1,
+      item.nombre,
+      item.precio,
+      item.cantidad,
+      item.sub_total,
+    ]);
+  });
+
+  const docDefinition = {
+    content: [
+      { text: "Lista de productos", style: "header" },
+      {
+        table: {
+          body: arrayOfArrays,
+        },
+      },
+      /* {
+        table: {
+          body: [
+            ["ID", "Producto", "Precio"],
+            [1, "Laptop", "$1200"],
+            [2, "Mouse", "$25"],
+            [3, "Teclado", "$45"],
+          ],
+        },
+      }, */
+    ],
+    styles: {
+      header: { fontSize: 16, bold: true, margin: [0, 0, 0, 10] },
+    },
+  };
+
+  pdfMake.createPdf(docDefinition).download("pedido.pdf");
 }
