@@ -6,14 +6,17 @@ const apiWhatsApp = "https://api.whatsapp.com/";
 const PhoneOfWhatsApp = "%2B522221706028";
 
 const loading = document.getElementById("loading");
-
+const year = document.getElementById("year");
 const formLogin = document.getElementById("formLogin");
 if (formLogin !== null) {
   formLogin.addEventListener("click", function (event) {
     signIn(event);
   });
 }
-
+if (year) {
+  const date = new Date();
+  year.textContent = date.getFullYear();
+}
 const isExistMenu = document.getElementById("menu");
 if (isExistMenu) {
   showCart();
